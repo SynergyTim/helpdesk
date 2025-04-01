@@ -1,6 +1,6 @@
 ## Install
 
-1. Git clone
+1. Git clone :
 ```
 git clone https://github.com/SynergyTim/helpdesk.git
 ```
