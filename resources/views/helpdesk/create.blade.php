@@ -164,9 +164,7 @@
                                 @else
                                 <i>* Upload file jika ingin mengupload file gambar</i>
                                 @endif
-
                                 <hr />
-
                                 <button type="submit" class="btn btn-success mr-3">Tambah</button>
                                 <a href="{{url('helpdesk')}}" class="btn btn-danger">Kembali</a>
                             </form>

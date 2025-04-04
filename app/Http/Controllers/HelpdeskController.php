@@ -12,9 +12,9 @@ class HelpdeskController extends Controller
 {
     public function index()
     {
-        $reporting = DB::table('categories as c')
-            ->join('reporting as r', 'c.id', '=', 'r.id')
-            ->join('units as u', 'u.id', '=', 'r.unit_id')
+        $reporting = DB::table('reporting as r')
+            ->join('categories as c', 'r.category_id', '=', 'c.id')
+            ->join('units as u', 'r.unit_id', '=', 'u.id')
             ->select('c.information', 'r.*', 'u.unit')
             ->get();
 
@@ -60,14 +60,28 @@ class HelpdeskController extends Controller
             $data['photo'] = $filename;
         }
 
-        ReportingModel::create($data);
-        return redirect()->route('helpdesk.index')->with('success', 'Data berhasil ditambahkan');
+        $ticket = ReportingModel::create($data);
+        return redirect()->route('helpdesk.show', $ticket->id)->with('success', 'Data berhasil ditambahkan');
     }
 
 
-    public function edit($id) {}
+    public function edit($id)
+    {
+        $ticket = ReportingModel::findOrFail($id);
+
+        $category = CategoryModel::select('id', 'information')->get();
+        $units = UnitModel::select('id', 'unit')->where('is_admin', 0)->get();
+
+        return view('helpdesk.edit', compact('ticket', 'category', 'units'));
+    }
 
     public function update(Request $request, $id) {}
+
+    public function show($id){
+
+        $reporting = ReportingModel::with(['category', 'unit'])->findOrFail($id);
+        return view('helpdesk.show', compact('reporting'));
+    }
 
     public function destroy($id) {}
 }

@@ -81,10 +81,10 @@
 
                                     <td class="d-flex justify-content-center">
 
-                                        <a href="{{ $item->id }}" class="btn btn-primary"><i
-                                                class="bi bi-pencil-fill mx-1"></i>Edit
-                                            Ticket
-                                        </a>
+                        <a href="{{ route('helpdesk.edit', $item->id) }}" class="btn btn-primary"><i
+                            class="bi bi-pencil-fill mx-1"></i>Edit
+                        Ticket</a>
+
 
                                     </td>
                                 </tr>
