@@ -69,22 +69,26 @@
                                 $no = 1;
                                 @endphp
 
+                                @foreach($reporting as $item)
                                 <tr>
+                                    <td>{{ $no++ }}</td>
+                                    <td>{{ $item->reporter }}</td>
+                                    <td>{{ $item->information }}</td>
+                                    <td>{{ $item->status != null ? $item->status : '-' }}</td>
+                                    <td>{{ $item->unit }}</td>
+                                    <td>{{ $item->complaint }}</td>
                                     <td>-</td>
-                                    <td>-</td>
-                                    <td>-</td>
-                                    <td>-</td>
-                                    <td>-</td>
-                                    <td>-</td>
-                                    <td>-</td>
+
                                     <td class="d-flex justify-content-center">
 
-                                        <a href="#" class="btn btn-primary"><i class="bi bi-pencil-fill mx-1"></i>Edit
+                                        <a href="{{ $item->id }}" class="btn btn-primary"><i
+                                                class="bi bi-pencil-fill mx-1"></i>Edit
                                             Ticket
                                         </a>
 
                                     </td>
                                 </tr>
+                                @endforeach
 
                                 {{-- @foreach($dashboard as $item)
                                 <tr>

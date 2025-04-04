@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string('complaint');
             $table->string('photo')->nullable();
             $table->string('handling')->nullable();
-            $table->string('officer');
-            $table->tinyInteger('status');
+            $table->string('officer')->nullable();
+            $table->tinyInteger('status')->nullable();
             $table->unsignedBigInteger('unit_id');
             $table->foreign('unit_id')->references('id')->on('units')->onDelete('cascade');
             $table->unsignedBigInteger('category_id');
