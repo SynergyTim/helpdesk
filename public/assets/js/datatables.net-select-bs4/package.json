@@ -24,8 +24,9 @@
         "sort"
     ],
     "dependencies": {
-        "datatables.net-select": ">=1.6.2",
         "datatables.net-bs4": ">=1.13.4",
+        "datatables.net-select": ">=1.6.2",
+        "datatables.net-select-bs4": "file:",
         "jquery": ">=1.7"
     },
     "moduleType": [

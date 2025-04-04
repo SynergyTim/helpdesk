@@ -24,6 +24,7 @@
     ],
     "dependencies": {
         "datatables.net": "1.13.8",
+        "datatables.net-bs4": "file:",
         "jquery": ">=1.7"
     },
     "moduleType": [
