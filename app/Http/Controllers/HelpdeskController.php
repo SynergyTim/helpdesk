@@ -4,13 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Models\CategoryModel;
 use App\Models\UnitModel;
+use App\Models\ReportingModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HelpdeskController extends Controller
 {
     public function index()
     {
-        return view('helpdesk.index');
+        $reporting = DB::table('categories as c')
+            ->join('reporting as r', 'c.id', '=', 'r.id')
+            ->join('units as u', 'u.id', '=', 'r.unit_id')
+            ->select('c.information', 'r.*', 'u.unit')
+            ->get();
+
+        return view('helpdesk.index', compact('reporting'));
     }
 
     public function create()
@@ -31,7 +39,31 @@ class HelpdeskController extends Controller
         return view('helpdesk.create', compact('category', 'units'));
     }
 
-    public function store(Request $request) {}
+    public function store(Request $request)
+    {
+        $request->validate([
+            'reporter' => 'required|string|max:255',
+            'division' => 'required|string|max:255',
+            'phone_number' => 'required|numeric',
+            'category_id' => 'required|numeric',
+            'unit_id' => 'required|numeric',
+            'complaint' => 'required|string',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048'
+        ]);
+
+        $data = $request->except('photo');
+
+        if ($request->hasFile('photo')) {
+            $file = $request->file('photo');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('assets/img/uploads'), $filename);
+            $data['photo'] = $filename;
+        }
+
+        ReportingModel::create($data);
+        return redirect()->route('helpdesk.index')->with('success', 'Data berhasil ditambahkan');
+    }
+
 
     public function edit($id) {}
 
