@@ -81,8 +81,6 @@
                                 <i class="bi bi-speedometer pl-3"></i><span>Dashboard</span></a>
                         </li>
 
-                        @if(Auth::user()->role == "admin")
-
                         <li class="menu-header">Main Navigation</li>
 
                         <li class="nav-item @if(Request::path() == 'helpdesk') active @endif">
@@ -90,6 +88,7 @@
                                 <i class="bi bi-calendar3-week-fill pl-3"></i><span>Helpdesk</span></a>
                         </li>
 
+                        @if(Auth::user()->role == "admin")
                         <li class="menu-header">Master Kategori</li>
 
                         <li class="nav-item @if(Request::segment(1) == 'category') active @endif">
@@ -112,12 +111,6 @@
                         </li>
                         @endif
 
-                        <li class="menu-header">Pengaturan</li>
-                        <li class="nav-item @if(Request::path() == 'change-password') active @endif">
-                            <a href="{{url('change-password')}}" class="nav-link"><i
-                                    class="bi bi-shield-lock-fill pl-3"></i>
-                                <span>Ganti Password</span></a>
-                        </li>
                     </ul>
                 </aside>
             </div>

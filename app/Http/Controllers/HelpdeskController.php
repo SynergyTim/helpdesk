@@ -6,6 +6,9 @@ use App\Models\CategoryModel;
 use App\Models\UnitModel;
 use App\Models\ReportingModel;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
 
 class HelpdeskController extends Controller
@@ -51,16 +54,23 @@ class HelpdeskController extends Controller
             'photo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048'
         ]);
 
-        $data = $request->except('photo');
-
         if ($request->hasFile('photo')) {
             $file = $request->file('photo');
             $filename = time() . '_' . $file->getClientOriginalName();
             $file->move(public_path('assets/img/uploads'), $filename);
-            $data['photo'] = $filename;
         }
 
-        $ticket = ReportingModel::create($data);
+        $ticket = ReportingModel::create([
+            'reporter' => trim($request->input('reporter')),
+            'division' => trim($request->input('division')),
+            'phone_number' => trim($request->input('phone_number')),
+            'category_id' => trim($request->input('category_id')),
+            'unit_id' => trim($request->input('unit_id')),
+            'complaint' => trim($request->input('complaint')),
+            'photo' => ($request->hasFile('photo') ? $filename : null),
+            'status' => 'open'
+        ]);
+
         return redirect()->route('helpdesk.show', $ticket->id)->with('success', 'Data berhasil ditambahkan');
     }
 
@@ -75,9 +85,42 @@ class HelpdeskController extends Controller
         return view('helpdesk.edit', compact('ticket', 'category', 'units'));
     }
 
-    public function update(Request $request, $id) {}
+    public function update(Request $request, $id)
+    {
 
-    public function show($id){
+        $validator = Validator::make($request->all(), [
+            'status' => 'required|string|max:5',
+            'officer' => 'required|string|max:35',
+            'handling' => 'required|string',
+            'updated_at' => 'required|date_format:Y-m-d\TH:i'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()
+                ->back()
+                ->withErrors($validator)
+                ->withInput();
+        } else {
+
+            $status = (trim(strtolower(($request->input('status')))) == 'open' ? 'open' : 'close');
+            $officer = trim($request->input('officer'));
+            $handling = trim($request->input('handling'));
+            $updated_at = Carbon::createFromFormat('Y-m-d\TH:i', $request->input('updated_at'))->format('Y-m-d H:i:s');
+
+            ReportingModel::where('id', $id)->update([
+                'status' => $status,
+                'officer' => $officer,
+                'handling' => $handling,
+                'updated_at' => $updated_at
+            ]);
+
+            Session::flash('success', 'Data helpdesk berhasil diupdated!');
+            return redirect('/helpdesk');
+        }
+    }
+
+    public function show($id)
+    {
 
         $reporting = ReportingModel::with(['category', 'unit'])->findOrFail($id);
         return view('helpdesk.show', compact('reporting'));

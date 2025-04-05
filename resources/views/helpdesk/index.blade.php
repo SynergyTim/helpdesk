@@ -72,29 +72,46 @@
                                 @foreach($reporting as $item)
                                 <tr>
                                     <td>{{ $no++ }}</td>
-                                    <td>{{ $item->reporter }}</td>
+                                    <td>{{ $item->reporter }} </br>
+
+                                        {{ $item->division }} <br />
+                                        {{ $item->phone_number }}
+                                    </td>
                                     <td>{{ $item->information }}</td>
-                                    <td>{{ $item->status != null ? $item->status : '-' }}</td>
+                                    <td>
+
+                                        @if($item->status == 'open')
+                                        <span class="badge badge-success">Open</span>
+
+                                        @elseif($item->status == 'close')
+                                        <span class="badge badge-danger">Close</span>
+
+                                        @else
+                                        -
+                                        @endif
+
+                                    </td>
                                     <td>{{ $item->unit }}</td>
                                     <td>{{ $item->complaint }}</td>
-                                    <td>-</td>
+
+                                    <td>
+                                        @if ($item->photo != null)
+                                        <img src="{{ asset('assets/img/uploads/' . $item->photo) }}"
+                                            style="width: 150px; height: 150px;">
+                                        @else
+                                        -
+                                        @endif
+                                    </td>
 
                                     <td class="d-flex justify-content-center">
 
-                        <a href="{{ route('helpdesk.edit', $item->id) }}" class="btn btn-primary"><i
-                            class="bi bi-pencil-fill mx-1"></i>Edit
-                        Ticket</a>
-
+                                        <a href="{{ route('helpdesk.edit', $item->id) }}" class="btn btn-primary"><i
+                                                class="bi bi-pencil-fill mx-1"></i>Edit
+                                            Ticket</a>
 
                                     </td>
                                 </tr>
                                 @endforeach
-
-                                {{-- @foreach($dashboard as $item)
-                                <tr>
-                                    <td>{{ $no++ }}</td>
-                                </tr>
-                                @endforeach --}}
 
                             </tbody>
                         </table>

@@ -60,35 +60,65 @@
 
                     <div class="row">
                         <div class="col">
-                            <form method="post" action="" enctype="multipart/form-data">
+                            <form method="post" action="{{ route('helpdesk.update', $ticket->id) }}">
                                 @csrf
+
+                                @method('PUT')
                                 <div class="form-group mr-3">
-                                    <label for="reporter">Status</label>
-                                    <select class="form-control border border-danger" id="reporter" name="reporter">
-                                        <option value="">-- Pilih Status --</option>
-                                        <option value="Mahasiswa">Mahasiswa</option>
-                                        <option value="Dosen">Dosen</option>
+                                    <label for="status">Status</label>
+                                    <select class="form-control border border-danger" id="status" name="status"
+                                        required>
+                                        <option value="" selected>-- Pilih Status --</option>
+                                        <option value="open">Open</option>
+                                        <option value="close">Close</option>
                                     </select>
                                 </div>
 
+                                @if ($errors->has('status'))
+                                <p class="mt-3" style="font-size: 15px; color:red;"><i
+                                        class="bi bi-exclamation-octagon-fill"></i>
+                                    {{ucfirst($errors->first('status'))}}
+                                </p>
+                                @endif
 
                                 <div class="form-group mr-3">
-                                    <label for="complaint">Penanganan</label>
-                                    <textarea class="form-control border border-danger" id="complaint" name="complaint"
-                                        autocomplete="off" style="height:100px;"></textarea>
+                                    <label for="handling">Penanganan</label>
+                                    <textarea class="form-control border border-danger" id="handling" name="handling"
+                                        autocomplete="off" style="height:100px;" required></textarea>
                                 </div>
+
+                                @if ($errors->has('handling'))
+                                <p class="mt-3" style="font-size: 15px; color:red;"><i
+                                        class="bi bi-exclamation-octagon-fill"></i>
+                                    {{ucfirst($errors->first('handling'))}}
+                                </p>
+                                @endif
 
                                 <div class="form-group mr-3">
-                                    <label for="reporter">Petugas</label>
-                                    <input type="text" class="form-control border border-danger" id="reporter"
-                                        name="reporter" autocomplete="off" >
+                                    <label for="officer">Petugas</label>
+                                    <input type="text" class="form-control border border-danger" id="officer"
+                                        name="officer" autocomplete="off" required>
                                 </div>
+
+                                @if ($errors->has('officer'))
+                                <p class="mt-3" style="font-size: 15px; color:red;"><i
+                                        class="bi bi-exclamation-octagon-fill"></i>
+                                    {{ucfirst($errors->first('officer'))}}
+                                </p>
+                                @endif
 
                                 <div class="form-group mr-3">
-                                    <label for="close_date">Close Date</label>
-                                    <input type="datetime-local" class="form-control border border-danger" id="close_date" name="close_date" autocomplete="off">
+                                    <label for="updated_at">Close Date</label>
+                                    <input type="datetime-local" class="form-control border border-danger"
+                                        id="updated_at" name="updated_at" autocomplete="off" required>
                                 </div>
 
+                                @if ($errors->has('updated_at'))
+                                <p class="mt-3" style="font-size: 15px; color:red;"><i
+                                        class="bi bi-exclamation-octagon-fill"></i>
+                                    {{ucfirst($errors->first('updated_at'))}}
+                                </p>
+                                @endif
 
                                 <button type="submit" class="btn btn-success mr-3">Ubah</button>
                                 <a href="{{url('helpdesk')}}" class="btn btn-danger">Kembali</a>

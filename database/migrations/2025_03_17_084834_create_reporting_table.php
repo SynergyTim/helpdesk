@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('photo')->nullable();
             $table->string('handling')->nullable();
             $table->string('officer')->nullable();
-            $table->tinyInteger('status')->nullable();
+            $table->enum('status', ['open', 'close'])->nullable();
             $table->unsignedBigInteger('unit_id');
             $table->foreign('unit_id')->references('id')->on('units')->onDelete('cascade');
             $table->unsignedBigInteger('category_id');
