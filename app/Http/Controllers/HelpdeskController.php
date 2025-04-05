@@ -121,7 +121,6 @@ class HelpdeskController extends Controller
 
     public function show($id)
     {
-
         $reporting = ReportingModel::with(['category', 'unit'])->findOrFail($id);
         return view('helpdesk.show', compact('reporting'));
     }

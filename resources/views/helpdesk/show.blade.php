@@ -88,7 +88,7 @@
             </div>
         </div>
     </div>
-    <a href="/helpdesk" class="btn btn-primary mb-3">
+    <a href="/dashboard" class="btn btn-primary mb-3">
         ← Kembali ke Dashboard
     </a>
 </div>
