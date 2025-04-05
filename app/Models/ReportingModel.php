@@ -11,7 +11,6 @@ class ReportingModel extends Model
 
     protected $table = "reporting";
     protected $guarded = [];
-    public $timestamps = false;
 
     // Relasi ke kategori
     public function category()
