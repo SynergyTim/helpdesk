@@ -1,7 +1,6 @@
 ## Helpdesk
 
-Aplikasi web helpdesk untuk karyawan adalah sistem berbasis web yang dirancang untuk membantu karyawan dalam menyampaikan, melacak, dan menyelesaikan masalah atau permintaan yang berkaitan dengan pekerjaan mereka. Aplikasi ini menjadi penghubung antara karyawan dan tim pendukung internal seperti IT, HR, atau fasilitas kantor.
-
+Secara umum helpdesk adalah sistem berbasis web yang dirancang untuk membantu karyawan dalam menyampaikan, melacak, dan menyelesaikan masalah atau permintaan yang berkaitan dengan pekerjaan mereka. Aplikasi ini menjadi penghubung antara karyawan dan tim pendukung internal seperti IT, HR, atau fasilitas kantor.
 
 ## Install
 
